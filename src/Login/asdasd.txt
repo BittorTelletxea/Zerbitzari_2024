@@ -1,0 +1,67 @@
+<?php
+    include('db.php');
+  
+
+    if (isset($_POST["login"])) {
+        header("Location: Login.php");
+        exit();
+    } elseif (isset($_POST["sartu"])) {
+        $izena = $_POST["izena"];
+        $pasahitza = $_POST["pasahitza"];
+        $argazkia = $_POST["argazkia"];
+
+        $sql2 = "INSERT INTO usuario (izena, pasahitza,argazkia) VALUES ('$izena', '$pasahitza','$argazkia')";
+        $sql1 = "SELECT * FROM usuario WHERE izena = '$izena'";
+
+
+        $stmt = $conn->prepare($sql1);
+        $stmt2 = $conn->prepare($sql2);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+    
+            if ($result->num_rows < 1) {
+                if($stmt2->execute()){
+                    header("Location: logeatua.php?izena=" .urlencode($izena));
+                }
+            } else {
+                echo "Erabiltzailea existitzen da";
+            }
+
+        $stmt->close();
+    }
+
+  }
+
+    $conn->close();
+    ?>
+Login
+    <?php
+    include('db.php');
+    ob_start();
+    if (isset($_POST["erregistratu"])) {
+        header("Location: Registrate.php");
+        exit();
+    } elseif (isset($_POST["sartu"])) {
+        $izena = $_POST["izena"];
+        $pasahitza = $_POST["pasahitza"];
+
+        $sql = "SELECT * FROM usuario WHERE izena = '$izena' and pasahitza = '$pasahitza'";
+        $stmt = $conn->prepare($sql);
+
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+    
+            if ($result->num_rows > 0 ) {
+                header("Location: logeatua.php?izena=" . urlencode($izena));
+            } else {
+                echo "Erabiltzailea okerra";
+            }
+
+        $stmt->close();
+    }
+
+
+    $conn->close();
+}
+ob_end_flush();

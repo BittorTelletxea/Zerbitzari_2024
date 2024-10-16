@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filma</title>
+    <link rel="stylesheet" href="style/estilo.css">
+</head>
+<body>
+    <div id="container">
+        <h3>Filma sartu</h3>
+        <form action="topmovies.php" method="post" >
+            <p>Izena<input type="text" name="izena" placeholder="Sartu filmaren izena"></p>
+            <p>ISAN<input type="number" name="isan" placeholder="Sartu filmaren ISAN zenbakia"></p>
+            <p>Urtea<input type="number" name="urtea" placeholder="Sartu filmaren urtea"></p>
+            <p>Puntuazioa <br>
+                <select name="puntuazioa">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </p>
+            <p>Argazkia <br><input type="file" name="argazkia"></p>
+            <input type="submit" value="Gorde" name="gorde" ><br>
+            <div class="form-footer">
+                <input type="submit" value="Gordetakoak" name="gordetakoak">
+                <input type="submit" value="Top Filmak" name="top"><br>
+                <input type="submit" value="Amaitu saioa" name="amaitu">
+
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+   
+</script>
+</html>
