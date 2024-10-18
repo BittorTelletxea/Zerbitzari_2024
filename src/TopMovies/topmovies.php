@@ -14,7 +14,7 @@ if(isset($_POST["gorde"])) {
     $izena = strtolower($izenaOsoa);
 
     if(strlen($isan)>0 && strlen($isan)<8 || strlen($isan) >8) {
-        echo "<link rel='stylesheet' href='style/style.css'><div id='container'>ISAN zenbakiak 8 digitu izan behar ditu</div>";
+        echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>ISAN zenbakiak 8 digitu izan behar ditu</div>";
     } else {
         $slctisan = "SELECT * FROM filmak WHERE ISAN = ?";
         $stmtislct1 = $conn->prepare($slctisan);
@@ -32,9 +32,9 @@ if(isset($_POST["gorde"])) {
                 $stmtupdt->bind_param("siis", $izena, $puntuazioa, $isan, $usuarioa);
                 
                 if($stmtupdt->execute()) {
-                    echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Erregistroa aktualizatuta</div>";
+                    echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Erregistroa aktualizatuta</div>";
                 } else {
-                    echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Errorea aktualizatzen</div>";
+                    echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Errorea aktualizatzen</div>";
                                  
                 }
             }
@@ -46,16 +46,16 @@ if(isset($_POST["gorde"])) {
                     $stmtinsrt->bind_param("ssiiis",$usuarioa,$izena,$isan,$urtea,$puntuazioa,$argazkia);
                     
                     if($stmtinsrt->execute()) {
-                        echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Erregistroa gordea</div>"; 
+                        echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Erregistroa gordea</div>"; 
                     } else {
-                        echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Errorea gordetzean</div>";
+                        echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Errorea gordetzean</div>";
                                          
                     }
                 }
             }
         
         } else {
-            echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Errorea isan kontsultan</div>";
+            echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Errorea isan kontsultan</div>";
                    
         }
     
@@ -116,7 +116,7 @@ if(isset($_POST["gorde"])) {
                         }
                       </script>";
             } else {
-                echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Ez daude filmik zenbaki horrekin</div>";
+                echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Ez daude filmik zenbaki horrekin</div>";
                 echo "<div class='form-footer'>";
                 echo "<input type='submit' value='Atzera' name='atzera'>";
                 echo "</div>";             

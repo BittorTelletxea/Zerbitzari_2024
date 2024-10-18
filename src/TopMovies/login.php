@@ -23,7 +23,7 @@
                 
                 
             } else {
-                echo "<link rel='stylesheet' href='style/style.css'><div id='container'>Erabiltzailea ez da existitzen</div>"; 
+                echo "<link rel='stylesheet' href='style/estilo.css'><div id='container'>Erabiltzailea ez da existitzen</div>"; 
             }
 
         $stmt->close();
