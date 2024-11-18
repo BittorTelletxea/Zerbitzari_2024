@@ -171,6 +171,7 @@ if(isset($_POST["gordetakoak"])){
         exit();
     }
     if (isset($_POST["amaitu"])){
+        session_destroy();
         header("Location: Login.php");
         exit();
     }

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ejercicio 12 - Actualizacion periodica de contenidos</title>
+<style type="text/css">
+body { margin: 0; }
+#contenidos { padding: 1em; }
+#divs {
+  height: 20px;
+  padding: .3em;
+  border-bottom: 1px solid #CCC;
+  background: #FAFAFA;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#ticker strong { margin-right: 1em; }
+#acciones {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+#divs{
+  display: flex;
+}
+#ordua{
+  margin-right: 20px;
+  font-weight: bold;
+}
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+<div id="divs">
+  <div id="ordua"></div>
+  <div id="ticker"></div>
+</div>
+
+<div id="acciones">
+  <input type="button" id="detener" value="Detener"/>
+  <input type="button" id="anterior" value="&laquo; Anterior" />
+  <input type="button" id="siguiente" value="Siguiente &raquo;" />
+</div>
+
+<div id="contenidos">
+<h1>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</h1>
+<p>Proin tristique condimentum sem. Fusce lorem sem, laoreet nec, laoreet et, venenatis nec, ligula.
+Nunc dictum sodales lorem. Fusce turpis. Nullam semper, ipsum ut ultrices mattis, nulla magna luctus 
+purus, sit amet vehicula magna magna vel velit.</p>
+
+<h2>Morbi a lacus. Proin pharetra nisi id est.</h2>
+
+<p>Maecenas mollis suscipit sapien. Pellentesque blandit dui eu mauris. Etiam elit urna, iaculis non,
+dignissim in, fermentum nec, ipsum. Nulla commodo aliquam lectus. Sed vulputate diam ac sapien accumsan
+consequat. Aliquam id urna sed dolor tincidunt tempor.</p>
+
+<h2>Quisque consequat. Nullam vel justo.</h2>
+
+<p>Cras sit amet elit a mauris ultricies viverra. Phasellus placerat quam et magna. Nunc sed tellus. 
+Pellentesque hendrerit pellentesque nunc. Aenean turpis. Sed justo tellus, mollis at, euismod at,  
+pellentesque eu, tellus. Nam vulputate. Nunc porttitor sapien tristique velit. Vestibulum tempus, 
+quam non dapibus pellentesque, sem nulla sagittis ligula, et volutpat turpis felis vitae nunc.</p>
+
+<p>Ut eros magna, congue in, sodales ac, facilisis ac, dolor. Aenean faucibus pellentesque est. Proin
+cursus. Vivamus mollis enim in magna. Donec urna risus, convallis eget, aliquet non, auctor sit amet, leo.
+Duis tellus purus, pharetra in, cursus sed, posuere semper, lorem. Fusce eget velit nec felis tempus
+gravida. Donec et augue vitae nulla posuere hendrerit. Nulla vehicula scelerisque massa. Phasellus eget
+lorem id quam molestie ultrices. Integer ac ligula sit amet lectus condimentum euismod. Sed malesuada 
+orci eu neque.</p>
+</div>
+</body>
+<script>
+  var arrayEsaldiak = [];
+  var kont = 0;
+  function ajax(){
+    document.getElementById("divs").style.backgroundColor = "";
+
+    var http = new XMLHttpRequest();
+    var url = "http://localhost:8080/27_2.9%20ARIKETA%20-%20AJAX%20-%20Sarrera/2%20Ariketa/servidor/generaContenidos.php";
+    http.onreadystatechange = function(){
+      if(http.readyState == 4 && http.status == 200){
+        kont++;
+        arrayEsaldiak[kont-1] = http.responseText;
+        document.getElementById("divs").style.backgroundColor = "yellow";
+
+          var ordua = new Date();
+          document.getElementById("ordua").innerHTML = ordua.getHours()+":" + ordua.getMinutes()+":" + ordua.getSeconds() +"    ";
+          esaldia(http);
+          }
+    }
+    http.open("GET",url, true);
+    http.send();
+  }
+  
+  function esaldia(http){
+    document.getElementById("ticker").innerHTML = http.responseText;
+  }
+ 
+  function click() {
+    var botoia = document.getElementById("detener");
+    
+     if(botoia.value == "Detener"){
+      clearInterval(intervalo);
+      botoia.value = "Iniciar";
+      console.log(arrayEsaldiak);
+      document.getElementById("divs").style.backgroundColor = "#FAFAFA";
+
+     }else{
+      intervalo = setInterval(ajax, 1000);
+      botoia.value="Detener";
+     }
+
+    }
+    function anterior(){
+      var botoia = document.getElementsByTagName("input")[0];
+      if(botoia.value == "Iniciar"){
+      kont -= 1;
+      if(arrayEsaldiak[kont]){
+        document.getElementById("ticker").innerHTML = arrayEsaldiak[kont];
+      }else{
+        console.log("esaldia ez da existitzen");
+      }
+    }else{
+      console.log("ezin da gelditu, martxan dago");
+    }
+    }
+    function siguiente(){
+      var botoia = document.getElementsByTagName("input")[0];
+      if(botoia.value == "Iniciar"){
+      kont += 1;
+      if(arrayEsaldiak[kont]){
+        document.getElementById("ticker").innerHTML = arrayEsaldiak[kont];
+      }else{
+        console.log("esaldia ez da existitzen");
+      }
+    }else{
+      console.log("ezin da gelditu, martxan dago");
+    }   
+    }
+
+  
+  document.getElementById("detener").addEventListener("click", click);
+  document.getElementById("anterior").addEventListener("click", anterior);
+  document.getElementById("siguiente").addEventListener("click", siguiente);
+
+  intervalo = setInterval(ajax, 1000);
+
+  
+
+</script>
+</html>
